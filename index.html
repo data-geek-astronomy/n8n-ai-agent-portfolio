@@ -1,0 +1,1513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Agent Portfolio | data-geek-astronomy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #080b12;
+  --bg2: #0d1117;
+  --bg3: #111827;
+  --border: #1f2937;
+  --border2: #374151;
+  --cyan: #22d3ee;
+  --cyan-dim: #0891b2;
+  --purple: #a78bfa;
+  --purple-dim: #7c3aed;
+  --green: #4ade80;
+  --amber: #fbbf24;
+  --orange: #fb923c;
+  --blue: #60a5fa;
+  --pink: #f472b6;
+  --red: #f87171;
+  --text: #f1f5f9;
+  --text2: #94a3b8;
+  --text3: #64748b;
+  --card-bg: rgba(15,20,30,0.85);
+  --glass: rgba(30,40,60,0.6);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* === CANVAS BG === */
+#bg-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+
+/* === NAV === */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(8,11,18,0.9);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(16px);
+  padding: 0 32px;
+  height: 60px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.nav-logo {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 15px;
+  color: var(--cyan);
+  display: flex; align-items: center; gap: 8px;
+}
+.nav-logo span { color: var(--text2); }
+.nav-links { display: flex; align-items: center; gap: 20px; }
+.nav-links a {
+  color: var(--text2);
+  text-decoration: none;
+  font-size: 13px;
+  transition: color .2s;
+}
+.nav-links a:hover { color: var(--cyan); }
+.github-btn {
+  display: flex; align-items: center; gap: 6px;
+  background: var(--bg3);
+  border: 1px solid var(--border2);
+  border-radius: 6px;
+  padding: 6px 14px;
+  color: var(--text);
+  text-decoration: none;
+  font-size: 13px;
+  transition: all .2s;
+}
+.github-btn:hover { border-color: var(--cyan); color: var(--cyan); }
+.github-btn svg { width: 16px; height: 16px; fill: currentColor; }
+
+/* === HERO === */
+.hero {
+  position: relative; z-index: 1;
+  min-height: 100vh;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  text-align: center;
+  padding: 80px 24px 60px;
+}
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(34,211,238,0.08);
+  border: 1px solid rgba(34,211,238,0.2);
+  border-radius: 100px;
+  padding: 6px 16px;
+  font-size: 12px;
+  color: var(--cyan);
+  font-family: 'JetBrains Mono', monospace;
+  margin-bottom: 28px;
+  letter-spacing: .05em;
+}
+.hero-badge::before { content: '●'; animation: blink 2s infinite; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
+.hero h1 {
+  font-size: clamp(40px, 7vw, 80px);
+  font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: 20px;
+  background: linear-gradient(135deg, #fff 30%, var(--cyan) 70%, var(--purple) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero-sub {
+  font-size: clamp(16px, 2vw, 20px);
+  color: var(--text2);
+  max-width: 600px;
+  line-height: 1.6;
+  margin-bottom: 48px;
+}
+.hero-stats {
+  display: flex; gap: 40px; justify-content: center; flex-wrap: wrap;
+  margin-bottom: 48px;
+}
+.stat {
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+}
+.stat-num {
+  font-size: 36px; font-weight: 700;
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--cyan);
+}
+.stat-label { font-size: 13px; color: var(--text3); text-transform: uppercase; letter-spacing: .08em; }
+.hero-cta {
+  display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
+}
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: linear-gradient(135deg, var(--cyan-dim), var(--purple-dim));
+  border: none; border-radius: 8px;
+  padding: 12px 28px;
+  color: #fff;
+  font-size: 15px; font-weight: 500;
+  cursor: pointer; text-decoration: none;
+  transition: all .2s;
+  box-shadow: 0 0 24px rgba(34,211,238,0.2);
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 40px rgba(34,211,238,0.35); }
+.btn-secondary {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: transparent;
+  border: 1px solid var(--border2);
+  border-radius: 8px;
+  padding: 12px 28px;
+  color: var(--text2);
+  font-size: 15px; font-weight: 500;
+  cursor: pointer; text-decoration: none;
+  transition: all .2s;
+}
+.btn-secondary:hover { border-color: var(--cyan); color: var(--cyan); }
+.scroll-hint {
+  position: absolute; bottom: 32px;
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  color: var(--text3); font-size: 12px;
+  animation: float 2.5s ease-in-out infinite;
+}
+@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
+.scroll-hint svg { width: 20px; height: 20px; stroke: var(--text3); }
+
+/* === MAIN CONTENT === */
+main { position: relative; z-index: 1; padding: 0 24px 80px; max-width: 1400px; margin: 0 auto; }
+
+/* === FILTER BAR === */
+.section-header {
+  text-align: center; padding: 60px 0 40px;
+}
+.section-header h2 {
+  font-size: 32px; font-weight: 700;
+  margin-bottom: 8px;
+}
+.section-header p { color: var(--text2); font-size: 16px; }
+.filter-bar {
+  display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;
+  margin-bottom: 48px;
+}
+.filter-btn {
+  display: flex; align-items: center; gap: 6px;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  padding: 7px 18px;
+  color: var(--text2);
+  font-size: 13px;
+  cursor: pointer;
+  transition: all .2s;
+  white-space: nowrap;
+}
+.filter-btn:hover, .filter-btn.active {
+  border-color: var(--cyan);
+  color: var(--cyan);
+  background: rgba(34,211,238,0.06);
+}
+.filter-btn .dot { width: 7px; height: 7px; border-radius: 50%; }
+
+/* === AGENT GRID === */
+.agent-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 20px;
+}
+
+/* === AGENT CARD === */
+.agent-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 24px;
+  cursor: pointer;
+  transition: all .3s;
+  position: relative;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(30px);
+}
+.agent-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity .5s ease, transform .5s ease, border-color .3s, box-shadow .3s;
+}
+.agent-card::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, transparent 60%, rgba(34,211,238,0.03));
+  opacity: 0; transition: opacity .3s;
+}
+.agent-card:hover {
+  border-color: var(--border2);
+  box-shadow: 0 0 0 1px rgba(34,211,238,0.15), 0 20px 40px rgba(0,0,0,0.4);
+  transform: translateY(-4px);
+}
+.agent-card:hover::before { opacity: 1; }
+.card-top {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  margin-bottom: 16px;
+}
+.card-icon {
+  width: 42px; height: 42px;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px;
+  background: var(--bg3);
+  border: 1px solid var(--border2);
+  flex-shrink: 0;
+}
+.card-meta {
+  display: flex; flex-direction: column; align-items: flex-end; gap: 6px;
+}
+.card-status {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 11px;
+  font-family: 'JetBrains Mono', monospace;
+  border-radius: 100px;
+  padding: 3px 10px;
+}
+.card-status.active {
+  background: rgba(74,222,128,0.1);
+  color: var(--green);
+  border: 1px solid rgba(74,222,128,0.2);
+}
+.card-status.active::before { content:'●'; }
+.card-status.inactive {
+  background: rgba(100,116,139,0.1);
+  color: var(--text3);
+  border: 1px solid var(--border);
+}
+.card-status.inactive::before { content:'○'; }
+.card-trigger {
+  font-size: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--text3);
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 2px 8px;
+}
+.card-title {
+  font-size: 16px; font-weight: 600;
+  line-height: 1.4;
+  margin-bottom: 8px;
+  color: var(--text);
+}
+.card-desc {
+  font-size: 13px;
+  color: var(--text2);
+  line-height: 1.6;
+  margin-bottom: 16px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.card-footer {
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 8px;
+}
+.card-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.tag {
+  font-size: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  color: var(--text3);
+}
+.cat-badge {
+  font-size: 11px; font-weight: 500;
+  padding: 3px 10px;
+  border-radius: 100px;
+}
+.card-view-btn {
+  font-size: 12px;
+  color: var(--cyan);
+  display: flex; align-items: center; gap: 4px;
+  background: none; border: none; cursor: pointer;
+  font-family: 'JetBrains Mono', monospace;
+  transition: gap .2s;
+}
+.card-view-btn:hover { gap: 8px; }
+
+/* === MODAL === */
+.modal-overlay {
+  position: fixed; inset: 0; z-index: 200;
+  background: rgba(0,0,0,0.85);
+  backdrop-filter: blur(8px);
+  display: none;
+  align-items: flex-start;
+  justify-content: center;
+  overflow-y: auto;
+  padding: 40px 16px;
+}
+.modal-overlay.open { display: flex; }
+.modal {
+  background: var(--bg2);
+  border: 1px solid var(--border2);
+  border-radius: 18px;
+  width: 100%;
+  max-width: 860px;
+  position: relative;
+  overflow: hidden;
+  animation: modalIn .3s ease;
+}
+@keyframes modalIn {
+  from { opacity:0; transform: scale(.95) translateY(20px); }
+  to { opacity:1; transform: scale(1) translateY(0); }
+}
+.modal-close {
+  position: absolute; top: 20px; right: 20px;
+  background: var(--bg3);
+  border: 1px solid var(--border2);
+  border-radius: 50%;
+  width: 36px; height: 36px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  color: var(--text2);
+  font-size: 18px;
+  transition: all .2s;
+  z-index: 10;
+}
+.modal-close:hover { border-color: var(--red); color: var(--red); }
+.modal-header {
+  padding: 32px 32px 24px;
+  border-bottom: 1px solid var(--border);
+  background: linear-gradient(135deg, rgba(34,211,238,0.04) 0%, transparent 60%);
+}
+.modal-badge-row {
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+.modal-cat { font-size: 12px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; }
+.modal-trigger-badge {
+  font-size: 11px;
+  font-family: 'JetBrains Mono', monospace;
+  padding: 3px 10px;
+  background: var(--bg3);
+  border: 1px solid var(--border2);
+  border-radius: 4px;
+  color: var(--text3);
+}
+.modal-status {
+  font-size: 11px;
+  font-family: 'JetBrains Mono', monospace;
+  border-radius: 100px;
+  padding: 3px 10px;
+}
+.modal-title {
+  font-size: 26px; font-weight: 700;
+  line-height: 1.3;
+  margin-bottom: 12px;
+}
+.modal-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.modal-tag {
+  font-size: 11px;
+  font-family: 'JetBrains Mono', monospace;
+  padding: 3px 10px;
+  background: var(--bg3);
+  border: 1px solid var(--border2);
+  border-radius: 4px;
+  color: var(--text2);
+}
+.modal-body { padding: 28px 32px; }
+
+/* XYZ Section */
+.xyz-section { margin-bottom: 32px; }
+.section-label {
+  font-size: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--cyan);
+  text-transform: uppercase;
+  letter-spacing: .12em;
+  margin-bottom: 16px;
+  display: flex; align-items: center; gap: 8px;
+}
+.section-label::after { content:''; flex:1; height:1px; background: var(--border); }
+.xyz-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.xyz-card {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px;
+}
+.xyz-card-label {
+  font-size: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+.xyz-x .xyz-card-label { color: var(--cyan); }
+.xyz-y .xyz-card-label { color: var(--purple); }
+.xyz-z .xyz-card-label { color: var(--green); }
+.xyz-card-text {
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.5;
+}
+
+/* Architecture Section */
+.arch-section { margin-bottom: 20px; }
+.flow-container {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 24px 16px;
+  overflow-x: auto;
+}
+.flow-legend {
+  display: flex; flex-wrap: wrap; gap: 12px;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+.legend-item {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 11px;
+  color: var(--text3);
+  font-family: 'JetBrains Mono', monospace;
+}
+.legend-dot { width: 10px; height: 10px; border-radius: 3px; }
+
+/* === FOOTER === */
+footer {
+  position: relative; z-index: 1;
+  border-top: 1px solid var(--border);
+  padding: 40px 32px;
+  text-align: center;
+  color: var(--text3);
+  font-size: 13px;
+}
+footer a { color: var(--cyan); text-decoration: none; }
+footer a:hover { text-decoration: underline; }
+
+/* Category colors handled via JS inline styles */
+
+/* dot colors for filter */
+.dot-Productivity { background: #22d3ee; }
+.dot-AgriTech { background: #4ade80; }
+.dot-AI { background: #a78bfa; }
+.dot-HR { background: #a78bfa; }
+.dot-Finance { background: #4ade80; }
+.dot-Healthcare { background: #f87171; }
+.dot-Transportation { background: #60a5fa; }
+.dot-Construction { background: #fb923c; }
+.dot-ECommerce { background: #f472b6; }
+.dot-Marketing { background: #fbbf24; }
+.dot-CS { background: #34d399; }
+
+@media (max-width: 640px) {
+  .xyz-grid { grid-template-columns: 1fr; }
+  .modal-body { padding: 20px 16px; }
+  .modal-header { padding: 24px 16px 20px; }
+  nav { padding: 0 16px; }
+  .nav-links .hide-mobile { display: none; }
+}
+</style>
+</head>
+<body>
+
+<canvas id="bg-canvas"></canvas>
+
+<nav>
+  <div class="nav-logo">⟨ <span>data-geek-astronomy</span> /ai-agents ⟩</div>
+  <div class="nav-links">
+    <a href="#agents" class="hide-mobile">Agents</a>
+    <a href="https://github.com/data-geek-astronomy" target="_blank" class="github-btn">
+      <svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+      GitHub
+    </a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-badge">LIVE PORTFOLIO · BUILT ON N8N</div>
+  <h1>AI Agents<br>That Ship Work</h1>
+  <p class="hero-sub">A collection of production-grade automation agents spanning healthcare, finance, transportation, and more — each solving a real problem with measurable impact.</p>
+  <div class="hero-stats">
+    <div class="stat"><span class="stat-num">20</span><span class="stat-label">Agents</span></div>
+    <div class="stat"><span class="stat-num">11</span><span class="stat-label">Industries</span></div>
+    <div class="stat"><span class="stat-num">15+</span><span class="stat-label">Integrations</span></div>
+    <div class="stat"><span class="stat-num">∞</span><span class="stat-label">Automations</span></div>
+  </div>
+  <div class="hero-cta">
+    <a href="#agents" class="btn-primary">View All Agents ↓</a>
+    <a href="https://github.com/data-geek-astronomy" target="_blank" class="btn-secondary">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+      View on GitHub
+    </a>
+  </div>
+  <div class="scroll-hint">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10l5 5 5-5"/></svg>
+    scroll to explore
+  </div>
+</section>
+
+<main id="agents">
+  <div class="section-header">
+    <h2>Agent <span style="color:var(--cyan)">Library</span></h2>
+    <p>Click any agent to explore the architecture and problem statement</p>
+  </div>
+
+  <div class="filter-bar" id="filterBar">
+    <button class="filter-btn active" data-cat="All">All <span style="color:var(--text3);font-family:'JetBrains Mono',monospace;font-size:11px">(20)</span></button>
+    <button class="filter-btn" data-cat="Healthcare"><span class="dot dot-Healthcare"></span>Healthcare</button>
+    <button class="filter-btn" data-cat="Transportation"><span class="dot dot-Transportation"></span>Transportation</button>
+    <button class="filter-btn" data-cat="Finance"><span class="dot dot-Finance"></span>Finance</button>
+    <button class="filter-btn" data-cat="HR & Ops"><span class="dot dot-HR"></span>HR & Ops</button>
+    <button class="filter-btn" data-cat="AI & ML"><span class="dot dot-AI"></span>AI & ML</button>
+    <button class="filter-btn" data-cat="Customer Success"><span class="dot dot-CS"></span>Customer Success</button>
+    <button class="filter-btn" data-cat="Construction"><span class="dot dot-Construction"></span>Construction</button>
+    <button class="filter-btn" data-cat="Productivity"><span class="dot dot-Productivity"></span>Productivity</button>
+    <button class="filter-btn" data-cat="AgriTech"><span class="dot dot-AgriTech"></span>AgriTech</button>
+    <button class="filter-btn" data-cat="Marketing"><span class="dot dot-Marketing"></span>Marketing</button>
+  </div>
+
+  <div class="agent-grid" id="agentGrid"></div>
+</main>
+
+<footer>
+  Built with n8n · Deployed on GitHub Pages ·
+  <a href="https://github.com/data-geek-astronomy" target="_blank">github.com/data-geek-astronomy</a>
+</footer>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal" id="modal">
+    <button class="modal-close" id="modalClose">✕</button>
+    <div class="modal-header">
+      <div class="modal-badge-row">
+        <span class="modal-cat cat-badge" id="mCat"></span>
+        <span class="modal-trigger-badge" id="mTrigger"></span>
+        <span class="modal-status card-status" id="mStatus"></span>
+      </div>
+      <div class="modal-title" id="mTitle"></div>
+      <div class="modal-tags" id="mTags"></div>
+    </div>
+    <div class="modal-body">
+      <div class="xyz-section">
+        <div class="section-label">Problem Statement · Google XYZ Format</div>
+        <div class="xyz-grid">
+          <div class="xyz-card xyz-x">
+            <div class="xyz-card-label">Accomplished (X)</div>
+            <div class="xyz-card-text" id="mXyzX"></div>
+          </div>
+          <div class="xyz-card xyz-y">
+            <div class="xyz-card-label">As Measured By (Y)</div>
+            <div class="xyz-card-text" id="mXyzY"></div>
+          </div>
+          <div class="xyz-card xyz-z">
+            <div class="xyz-card-label">By Doing (Z)</div>
+            <div class="xyz-card-text" id="mXyzZ"></div>
+          </div>
+        </div>
+      </div>
+      <div class="arch-section">
+        <div class="section-label">Architecture Flow</div>
+        <div class="flow-container">
+          <div id="flowDiagram"></div>
+          <div class="flow-legend">
+            <div class="legend-item"><div class="legend-dot" style="background:#10b981;border:1px solid #10b981"></div>Trigger</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#3b82f6;border:1px solid #3b82f6"></div>HTTP / Data</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#8b5cf6;border:1px solid #8b5cf6"></div>AI / LLM</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#f59e0b;border:1px solid #f59e0b"></div>Decision</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#f97316;border:1px solid #f97316"></div>Action</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#6366f1;border:1px solid #6366f1"></div>Transform</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#22d3ee;border:1px solid #22d3ee"></div>Output</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ===============================
+// NODE COLORS
+// ===============================
+const NODE_STYLES = {
+  trigger:  { bg:'#052e16', border:'#10b981', text:'#4ade80' },
+  schedule: { bg:'#052e16', border:'#10b981', text:'#4ade80' },
+  webhook:  { bg:'#052e16', border:'#10b981', text:'#4ade80' },
+  http:     { bg:'#1e3a5f', border:'#3b82f6', text:'#93c5fd' },
+  ai:       { bg:'#2d1b69', border:'#8b5cf6', text:'#c4b5fd' },
+  set:      { bg:'#1f2937', border:'#4b5563', text:'#9ca3af' },
+  code:     { bg:'#0c1a2e', border:'#6366f1', text:'#a5b4fc' },
+  decision: { bg:'#451a03', border:'#f59e0b', text:'#fcd34d' },
+  action:   { bg:'#431407', border:'#f97316', text:'#fdba74' },
+  output:   { bg:'#022c22', border:'#22d3ee', text:'#67e8f9' },
+  split:    { bg:'#1e1b4b', border:'#6366f1', text:'#a5b4fc' },
+};
+
+// ===============================
+// AGENTS DATA
+// ===============================
+const agents = [
+  {
+    id: 'ai-meeting',
+    name: 'AI Meeting Intelligence Agent',
+    category: 'Productivity',
+    icon: '🧠',
+    active: true,
+    trigger: 'Webhook',
+    tags: ['Zoom','GPT-4o-mini','Asana','Gmail','n8n'],
+    desc: 'Triggered by Zoom recording.completed webhook — downloads transcript, uses GPT-4o-mini to extract action items and decisions, creates Asana tasks per item, and emails a formatted summary to all attendees within 5 minutes.',
+    xyz: {
+      x: 'Eliminated manual meeting follow-up and action-item creation after every Zoom call',
+      y: 'Reducing post-meeting processing time from 45 minutes to under 5 minutes per meeting',
+      z: 'Listening to Zoom recording.completed events, extracting action items with GPT-4o-mini, creating Asana tasks per owner, and emailing a structured summary to all attendees automatically'
+    },
+    flow: {
+      nodes: [
+        {id:'n1',label:'Zoom\nWebhook',type:'webhook',icon:'🔗',x:0,y:0},
+        {id:'n2',label:'Fetch\nTranscript',type:'http',icon:'🌐',x:1,y:0},
+        {id:'n3',label:'Prepare\nData',type:'set',icon:'⚙️',x:2,y:0},
+        {id:'n4',label:'GPT-4o-mini\nAnalyze',type:'ai',icon:'🧠',x:3,y:0},
+        {id:'n5',label:'Extract\nIntelligence',type:'set',icon:'⚙️',x:4,y:0},
+        {id:'n6',label:'Split Action\nItems',type:'split',icon:'✂️',x:5,y:0},
+        {id:'n7',label:'Send\nEmail',type:'action',icon:'📧',x:6,y:-0.6},
+        {id:'n8',label:'Create\nAsana Task',type:'action',icon:'✅',x:6,y:0.6},
+      ],
+      edges:[['n1','n2'],['n2','n3'],['n3','n4'],['n4','n5'],['n5','n6'],['n6','n7'],['n6','n8']]
+    }
+  },
+  {
+    id: 'smart-farm',
+    name: 'Smart Farm Crisis Response Agent',
+    category: 'AgriTech',
+    icon: '🌱',
+    active: true,
+    trigger: 'Schedule',
+    tags: ['OpenWeatherMap','IoT Sensors','GPT-4o-mini','Twilio','Gmail'],
+    desc: 'Monitors OpenWeatherMap + IoT soil sensors every 15 min, uses AI to detect drought/frost/flooding/heat crises, then auto-triggers irrigation, WhatsApp-alerts the farmer, and emails crop buyers.',
+    xyz: {
+      x: 'Protected crop yields from climate-driven crises with fully automated response',
+      y: 'Detecting and responding to drought, frost, or flooding events within 15 minutes vs. 4+ hours manually',
+      z: 'Polling OpenWeatherMap and IoT soil sensors every 15 minutes, running GPT-4o-mini crisis analysis, triggering irrigation systems, WhatsApp-alerting the farmer, and emailing crop buyers'
+    },
+    flow: {
+      nodes: [
+        {id:'n1',label:'Every\n15 Min',type:'schedule',icon:'🕒',x:0,y:0},
+        {id:'n2',label:'Fetch\nWeather',type:'http',icon:'🌤️',x:1,y:0},
+        {id:'n3',label:'Fetch\nSoil IoT',type:'http',icon:'🌡️',x:2,y:0},
+        {id:'n4',label:'Combine\nSensors',type:'set',icon:'⚙️',x:3,y:0},
+        {id:'n5',label:'GPT-4o-mini\nAnalyze',type:'ai',icon:'🧠',x:4,y:0},
+        {id:'n6',label:'Crisis\nDetected?',type:'decision',icon:'◆',x:5,y:0},
+        {id:'n7',label:'WhatsApp\nAlert',type:'action',icon:'📱',x:6,y:-0.8},
+        {id:'n8',label:'Email\nBuyers',type:'action',icon:'📧',x:7,y:-0.8},
+        {id:'n9',label:'Trigger\nIrrigation',type:'action',icon:'💧',x:8,y:-0.8},
+        {id:'n10',label:'Log\nAll Clear',type:'output',icon:'✓',x:6,y:0.6},
+      ],
+      edges:[
+        ['n1','n2'],['n2','n3'],['n3','n4'],['n4','n5'],['n5','n6'],
+        ['n6','n7'],['n7','n8'],['n8','n9'],['n6','n10']
+      ]
+    }
+  },
+  {
+    id: 'snorkel-rag',
+    name: 'Snorkel RAG Evaluation Pipeline',
+    category: 'AI & ML',
+    icon: '🔬',
+    active: true,
+    trigger: 'Webhook + Schedule',
+    tags: ['GPT-4o','Supabase','RAG','Vector Search','n8n'],
+    desc: 'Snorkel-inspired agentic RAG eval pipeline: synthetic adversarial question generation → programmatic citation + rubric evaluation → 90% pass-rate gate → expert human-in-the-loop calibration loop.',
+    xyz: {
+      x: 'Ensured RAG agent quality before production deployment with automated evaluation',
+      y: 'Enforcing a programmatic 90% pass-rate gate across citation accuracy and rubric compliance checks',
+      z: 'Generating synthetic adversarial questions via GPT-4o, scoring answers against citation patterns and rubrics, gating on pass rate, and routing failures to human expert calibration logged in Supabase'
+    },
+    flow: {
+      nodes: [
+        {id:'n1',label:'PDF Upload\n/ Schedule',type:'webhook',icon:'🔗',x:0,y:0},
+        {id:'n2',label:'Extract\nPDF Text',type:'set',icon:'📄',x:1,y:0},
+        {id:'n3',label:'GPT-4o\nGen Questions',type:'ai',icon:'🧠',x:2,y:0},
+        {id:'n4',label:'Split\nQuestions',type:'split',icon:'✂️',x:3,y:0},
+        {id:'n5',label:'Call RAG\nAgent',type:'http',icon:'🌐',x:4,y:0},
+        {id:'n6',label:'Score\nAnswer',type:'code',icon:'</> ',x:5,y:0},
+        {id:'n7',label:'Aggregate\nResults',type:'split',icon:'📊',x:6,y:0},
+        {id:'n8',label:'Pass Rate\n≥ 90%?',type:'decision',icon:'◆',x:7,y:0},
+        {id:'n9',label:'Production\nReady ✓',type:'output',icon:'✓',x:8,y:-0.6},
+        {id:'n10',label:'Needs\nReview',type:'action',icon:'🔁',x:8,y:0.6},
+      ],
+      edges:[
+        ['n1','n2'],['n2','n3'],['n3','n4'],['n4','n5'],['n5','n6'],
+        ['n6','n7'],['n7','n8'],['n8','n9'],['n8','n10']
+      ]
+    }
+  },
+  {
+    id: 'employee-offboarding',
+    name: 'Employee Offboarding Security Agent',
+    category: 'HR & Ops',
+    icon: '🔐',
+    active: false,
+    trigger: 'Webhook',
+    tags: ['Google Workspace','Slack','GitHub','GPT-4o-mini','Gmail'],
+    desc: 'HR-triggered webhook that auto-revokes Google Workspace, Slack, and GitHub access, transfers Drive files to manager, generates an AI audit report, and emails IT + Legal confirmation — zero manual steps, completes in under 5 minutes.',
+    xyz: {
+      x: 'Eliminated security exposure from employee departures by automating full access revocation',
+      y: 'Reducing credential revocation time from 2 business days to under 5 minutes with zero manual steps',
+      z: 'Listening to HR system webhooks, revoking Google Workspace, Slack, and GitHub access in parallel, transferring Drive files to the manager, and generating an AI audit report for IT and Legal'
+    },
+    flow: {
+      nodes: [
+        {id:'n1',label:'HR System\nWebhook',type:'webhook',icon:'🔗',x:0,y:0},
+        {id:'n2',label:'Revoke\nGoogle WS',type:'http',icon:'🔐',x:1,y:-0.8},
+        {id:'n3',label:'Revoke\nSlack',type:'http',icon:'🔐',x:1,y:0},
+        {id:'n4',label:'Revoke\nGitHub',type:'http',icon:'🔐',x:1,y:0.8},
+        {id:'n5',label:'Transfer\nDrive Files',type:'http',icon:'📁',x:2.5,y:0},
+        {id:'n6',label:'GPT-4o-mini\nAudit Report',type:'ai',icon:'🧠',x:3.5,y:0},
+        {id:'n7',label:'Email IT\n+ Legal',type:'action',icon:'📧',x:4.5,y:0},
+      ],
+      edges:[
+        ['n1','n2'],['n1','n3'],['n1','n4'],
+        ['n2','n5'],['n3','n5'],['n4','n5'],
+        ['n5','n6'],['n6','n7']
+      ]
+    }
+  },
+  {
+    id: 'loan-screening',
+    name: 'Loan Application Pre-Screening Agent',
+    category: 'Finance',
+    icon: '💳',
+    active: false,
+    trigger: 'Webhook',
+    tags: ['GPT-4o-mini','DTI Analysis','Risk Scoring','n8n','Webhook'],
+    desc: 'Webhook-triggered loan pre-screener that calculates DTI, runs AI underwriting via GPT-4o-mini, then auto-approves, auto-denies, or routes to a human underwriter with a full risk brief — all within seconds.',
+    xyz: {
+      x: 'Accelerated loan pre-screening decisions from days to seconds with AI underwriting',
+      y: 'Processing 100% of applications instantly vs. manual queue processing taking 2–5 business days',
+      z: 'Computing Debt-to-Income ratios, running GPT-4o-mini underwriting analysis, and auto-approving, denying, or routing to a human underwriter with a complete risk brief'
+    },
+    flow: {
+      nodes: [
+        {id:'n1',label:'Loan App\nWebhook',type:'webhook',icon:'🔗',x:0,y:0},
+        {id:'n2',label:'Calculate\nDTI Ratio',type:'code',icon:'</> ',x:1,y:0},
+        {id:'n3',label:'GPT-4o-mini\nUnderwriting',type:'ai',icon:'🧠',x:2,y:0},
+        {id:'n4',label:'Decision\nRouter',type:'decision',icon:'◆',x:3,y:0},
+        {id:'n5',label:'Auto\nApprove',type:'output',icon:'✅',x:4,y:-0.8},
+        {id:'n6',label:'Route to\nHuman',type:'action',icon:'👤',x:4,y:0},
+        {id:'n7',label:'Auto\nDeny',type:'action',icon:'❌',x:4,y:0.8},
+      ],
+      edges:[
+        ['n1','n2'],['n2','n3'],['n3','n4'],
+        ['n4','n5'],['n4','n6'],['n4','n7']
+      ]
+    }
+  },
+  {
+    id: 'inventory-crisis',
+    name: 'E-Commerce Inventory Crisis Agent',
+    category: 'E-Commerce',
+    icon: '📦',
+    active: false,
+    trigger: 'Schedule',
+    tags: ['Shopify','GPT-4o-mini','Slack','Gmail','n8n'],
+    desc: 'Hourly Shopify inventory monitor that detects critical/high/medium stock levels, uses GPT-4o-mini to draft purchase orders, posts Slack alerts, emails suppliers, and notifies waitlist customers automatically.',
+    xyz: {
+      x: 'Prevented stockouts and supplier delays by monitoring inventory in real time',
+      y: 'Replacing daily manual stock checks with hourly automated monitoring covering 100% of SKUs',
+      z: 'Pulling Shopify inventory hourly, running AI stock-level classification, auto-drafting purchase orders, alerting the team on Slack, emailing suppliers, and notifying waitlisted customers'
+    },
+    flow: {
+      nodes: [
+        {id:'n1',label:'Every\nHour',type:'schedule',icon:'🕒',x:0,y:0},
+        {id:'n2',label:'Fetch Shopify\nInventory',type:'http',icon:'🛍️',x:1,y:0},
+        {id:'n3',label:'Stock Level\nCheck',type:'decision',icon:'◆',x:2,y:0},
+        {id:'n4',label:'GPT-4o-mini\nDraft PO',type:'ai',icon:'🧠',x:3,y:0},
+        {id:'n5',label:'Slack\nAlert',type:'action',icon:'💬',x:4,y:-0.8},
+        {id:'n6',label:'Email\nSuppliers',type:'action',icon:'📧',x:4,y:0},
+        {id:'n7',label:'Notify\nWaitlist',type:'action',icon:'📣',x:4,y:0.8},
+      ],
+      edges:[
+        ['n1','n2'],['n2','n3'],['n3','n4'],
+        ['n4','n5'],['n4','n6'],['n4','n7']
+      ]
+    }
+  },
+  {
+    id: 'content-repurposing',
+    name: 'Content Repurposing Pipeline',
+    category: 'Marketing',
+    icon: '✍️',
+    active: true,
+    trigger: 'Webhook',
+    tags: ['GPT-4o-mini','Gmail','Buffer','Twitter','LinkedIn'],
+    desc: 'Webhook-triggered pipeline that fetches any blog/YouTube URL, uses GPT-4o-mini to generate a 10-tweet thread, LinkedIn post, email newsletter, and 3 hooks, then sends the newsletter via Gmail and schedules to Buffer.',
+    xyz: {
+      x: 'Multiplied content reach by repurposing one article into five platform-ready formats instantly',
+      y: 'Reducing content repurposing from 3–5 hours of manual work to under 90 seconds per piece',
+      z: 'Ingesting any blog or YouTube URL, running GPT-4o-mini to generate tweet threads, LinkedIn posts, email newsletters, and hook variations, then distributing via Gmail and Buffer automatically'
+    },
+    flow: {
+      nodes: [
+        {id:'n1',label:'Content\nWebhook',type:'webhook',icon:'🔗',x:0,y:0},
+        {id:'n2',label:'Fetch\nContent',type:'http',icon:'🌐',x:1,y:0},
+        {id:'n3',label:'GPT-4o-mini\nGenerate',type:'ai',icon:'🧠',x:2,y:0},
+        {id:'n4',label:'Split\nFormats',type:'split',icon:'✂️',x:3,y:0},
+        {id:'n5',label:'Tweet\nThread',type:'output',icon:'🐦',x:4,y:-0.9},
+        {id:'n6',label:'LinkedIn\nPost',type:'output',icon:'💼',x:4,y:-0.3},
+        {id:'n7',label:'Email\nNewsletter',type:'action',icon:'📧',x:4,y:0.3},
+        {id:'n8',label:'Buffer\nSchedule',type:'action',icon:'📅',x:4,y:0.9},
+      ],
+      edges:[
+        ['n1','n2'],['n2','n3'],['n3','n4'],
+        ['n4','n5'],['n4','n6'],['n4','n7'],['n4','n8']
+      ]
+    }
+  },
+  {
+    id: 'job-placement',
+    name: 'Job Placement Tracker',
+    category: 'HR & Ops',
+    icon: '🎓',
+    active: false,
+    trigger: 'Schedule',
+    tags: ['LinkedIn','GPT-4o-mini','Google Sheets','Slack','Gmail'],
+    desc: 'Monitors alumni LinkedIn profiles daily, detects job changes, updates Google Sheets, generates personalized outreach emails via GPT-4o-mini, and notifies the placement team on Slack.',
+    xyz: {
+      x: 'Automated continuous alumni career tracking for university placement offices',
+      y: 'Replacing quarterly manual surveys with daily LinkedIn monitoring across 100% of alumni profiles',
+      z: 'Scraping LinkedIn profiles on a daily schedule, detecting job changes with AI, updating a Google Sheets tracker, generating personalized GPT-powered outreach emails, and pinging the placement team on Slack'
+    },
+    flow: {
+      nodes: [
+        {id:'n1',label:'Daily\nSchedule',type:'schedule',icon:'🕒',x:0,y:0},
+        {id:'n2',label:'Fetch Alumni\nLinkedIn',type:'http',icon:'🔍',x:1,y:0},
+        {id:'n3',label:'Detect\nJob Change',type:'ai',icon:'🧠',x:2,y:0},
+        {id:'n4',label:'Job\nChanged?',type:'decision',icon:'◆',x:3,y:0},
+        {id:'n5',label:'Update\nGoogle Sheets',type:'action',icon:'📊',x:4,y:-0.6},
+        {id:'n6',label:'GPT Outreach\nEmail',type:'ai',icon:'🧠',x:4,y:0.3},
+        {id:'n7',label:'Slack\nNotify Team',type:'action',icon:'💬',x:5,y:0},
+      ],
+      edges:[
+        ['n1','n2'],['n2','n3'],['n3','n4'],
+        ['n4','n5'],['n4','n6'],['n5','n7'],['n6','n7']
+      ]
+    }
+  },
+  {
+    id: 'tariff-iq',
+    name: 'TariffIQ — Dynamic Tariff Realignment Agent',
+    category: 'Finance',
+    icon: '⚖️',
+    active: false,
+    trigger: 'Schedule',
+    tags: ['Federal Register','CBP','USTR','GPT-4o-mini','Slack','Gmail'],
+    desc: 'Monitors Federal Register/CBP/USTR daily for tariff changes, calculates landed cost impact via JS tool, and alerts procurement via Slack + Gmail. Solves the 93% gap in automated tariff monitoring.',
+    xyz: {
+      x: 'Closed the 93% gap in automated tariff monitoring for procurement teams',
+      y: 'Delivering daily landed-cost impact alerts vs. manual monthly tariff audits that miss time-sensitive changes',
+      z: 'Scraping Federal Register, CBP, and USTR feeds daily, parsing regulatory changes with GPT-4o-mini, computing landed cost impacts via custom JavaScript, and alerting procurement via Slack and Gmail'
+    },
+    flow: {
+      nodes: [
+        {id:'n1',label:'Daily\nSchedule',type:'schedule',icon:'🕒',x:0,y:0},
+        {id:'n2',label:'Fetch\nFed Register',type:'http',icon:'🌐',x:1,y:-0.5},
+        {id:'n3',label:'Fetch CBP\n+ USTR',type:'http',icon:'🌐',x:1,y:0.5},
+        {id:'n4',label:'GPT-4o-mini\nParse Changes',type:'ai',icon:'🧠',x:2.5,y:0},
+        {id:'n5',label:'Calculate\nLanded Cost',type:'code',icon:'</> ',x:3.5,y:0},
+        {id:'n6',label:'Slack\nAlert',type:'action',icon:'💬',x:4.5,y:-0.5},
+        {id:'n7',label:'Email\nProcurement',type:'action',icon:'📧',x:4.5,y:0.5},
+      ],
+      edges:[
+        ['n1','n2'],['n1','n3'],
+        ['n2','n4'],['n3','n4'],
+        ['n4','n5'],['n5','n6'],['n5','n7']
+      ]
+    }
+  },
+  {
+    id: 'multilingual-support',
+    name: 'Multi-Lingual Customer Support Hub',
+    category: 'Customer Success',
+    icon: '🌍',
+    active: true,
+    trigger: 'Webhook',
+    tags: ['GPT-4o-mini','Translation','Sentiment AI','Slack','Gmail'],
+    desc: 'AI-powered multi-lingual support hub: translates tickets in any language, analyzes sentiment, fetches live order status, auto-resolves or escalates angry customers to Slack with a human-ready draft reply.',
+    xyz: {
+      x: 'Enabled 24/7 multilingual customer support across all languages without adding headcount',
+      y: 'Resolving or triaging tickets in under 30 seconds vs. hours of manual translation and lookup',
+      z: 'Detecting language, translating tickets with GPT-4o-mini, scoring sentiment, fetching live order data, and either auto-resolving low-risk tickets or escalating angry customers to Slack with a human-ready draft reply'
+    },
+    flow: {
+      nodes: [
+        {id:'n1',label:'Ticket\nWebhook',type:'webhook',icon:'🔗',x:0,y:0},
+        {id:'n2',label:'Detect\nLanguage',type:'ai',icon:'🧠',x:1,y:0},
+        {id:'n3',label:'Translate\n+ Sentiment',type:'ai',icon:'🧠',x:2,y:0},
+        {id:'n4',label:'Fetch\nOrder Status',type:'http',icon:'🌐',x:3,y:0},
+        {id:'n5',label:'Escalate?',type:'decision',icon:'◆',x:4,y:0},
+        {id:'n6',label:'Auto\nResolve',type:'output',icon:'✓',x:5,y:-0.6},
+        {id:'n7',label:'Slack\n+ Draft Reply',type:'action',icon:'💬',x:5,y:0.6},
+      ],
+      edges:[
+        ['n1','n2'],['n2','n3'],['n3','n4'],['n4','n5'],
+        ['n5','n6'],['n5','n7']
+      ]
+    }
+  },
+  {
+    id: 'churn-savior',
+    name: 'AI Customer Churn Risk Savior',
+    category: 'Customer Success',
+    icon: '📉',
+    active: true,
+    trigger: 'Webhook',
+    tags: ['GPT-4o-mini','Churn Detection','Slack','n8n DataTable'],
+    desc: 'Multi-agent churn risk detector: analyzes support tickets via GPT-4o-mini, scores HIGH/MEDIUM/LOW, routes to escalation or auto-reply, and logs all events to churn_risk_log DataTable.',
+    xyz: {
+      x: 'Identified at-risk customers before they churned using AI-powered ticket analysis',
+      y: 'Scoring 100% of incoming support tickets vs. manually reviewing a small fraction for churn signals',
+      z: 'Analyzing every ticket with GPT-4o-mini for churn risk signals, scoring HIGH/MEDIUM/LOW, routing HIGH-risk cases to immediate escalation, sending auto-replies to MEDIUM cases, and logging all events to a DataTable'
+    },
+    flow: {
+      nodes: [
+        {id:'n1',label:'Ticket\nWebhook',type:'webhook',icon:'🔗',x:0,y:0},
+        {id:'n2',label:'GPT-4o-mini\nAnalyze Risk',type:'ai',icon:'🧠',x:1,y:0},
+        {id:'n3',label:'Score\nHIGH/MED/LOW',type:'code',icon:'</> ',x:2,y:0},
+        {id:'n4',label:'Risk\nRouter',type:'decision',icon:'◆',x:3,y:0},
+        {id:'n5',label:'Escalation\nTeam Alert',type:'action',icon:'🚨',x:4,y:-0.6},
+        {id:'n6',label:'Auto\nReply',type:'action',icon:'📧',x:4,y:0.3},
+        {id:'n7',label:'Log\nDataTable',type:'output',icon:'📊',x:5,y:0},
+      ],
+      edges:[
+        ['n1','n2'],['n2','n3'],['n3','n4'],
+        ['n4','n5'],['n4','n6'],
+        ['n5','n7'],['n6','n7']
+      ]
+    }
+  },
+  {
+    id: 'medical-report',
+    name: 'Medical Report Analyzer',
+    category: 'Healthcare',
+    icon: '🏥',
+    active: true,
+    trigger: 'Webhook',
+    tags: ['Google Gemini','Medical AI','Gmail','Risk Detection'],
+    desc: 'Complete medical report analysis workflow using Google Gemini. Analyzes reports, extracts clinical data, identifies drug interactions and risks, and sends formatted summary emails to both doctor and patient.',
+    xyz: {
+      x: 'Automated clinical report analysis and patient communication for healthcare providers',
+      y: 'Delivering structured clinical summaries in under 2 minutes vs. 15–30 minutes of manual chart review',
+      z: 'Ingesting medical reports via webhook, running Gemini AI to extract findings and flag drug interactions, and sending role-appropriate summaries to both the physician and patient simultaneously'
+    },
+    flow: {
+      nodes: [
+        {id:'n1',label:'Report\nWebhook',type:'webhook',icon:'🔗',x:0,y:0},
+        {id:'n2',label:'Extract\nReport Data',type:'set',icon:'📄',x:1,y:0},
+        {id:'n3',label:'Gemini AI\nAnalyze',type:'ai',icon:'🧠',x:2,y:0},
+        {id:'n4',label:'Flag Drug\nInteractions',type:'decision',icon:'◆',x:3,y:0},
+        {id:'n5',label:'Email\nDoctor',type:'action',icon:'👨‍⚕️',x:4,y:-0.5},
+        {id:'n6',label:'Email\nPatient',type:'action',icon:'📧',x:4,y:0.5},
+      ],
+      edges:[
+        ['n1','n2'],['n2','n3'],['n3','n4'],
+        ['n4','n5'],['n4','n6']
+      ]
+    }
+  },
+  {
+    id: 'medication-safety',
+    name: 'Medication Safety & Drug Interaction Checker',
+    category: 'Healthcare',
+    icon: '💊',
+    active: false,
+    trigger: 'Webhook',
+    tags: ['GPT-4o-mini','Drug Interactions','Clinical AI','Gmail','Alert System'],
+    desc: 'AI-powered medication safety agent that checks for dangerous drug interactions, contraindications, and side effects. Alerts doctors immediately and sends patient warnings.',
+    xyz: {
+      x: 'Prevented dangerous medication errors by screening every prescription for drug interactions in real time',
+      y: 'Catching 100% of contraindication combinations vs. manual pharmacist spot-checks covering ~30%',
+      z: 'Receiving prescription data via webhook, running GPT-4o-mini analysis against known drug interaction databases, flagging dangerous combinations, immediately alerting the prescribing physician, and sending patient safety warnings'
+    },
+    flow: {
+      nodes: [
+        {id:'n1',label:'Prescription\nWebhook',type:'webhook',icon:'🔗',x:0,y:0},
+        {id:'n2',label:'Parse Meds\n+ Dosages',type:'set',icon:'⚙️',x:1,y:0},
+        {id:'n3',label:'GPT-4o-mini\nInteraction Check',type:'ai',icon:'🧠',x:2,y:0},
+        {id:'n4',label:'Dangerous\nInteraction?',type:'decision',icon:'◆',x:3,y:0},
+        {id:'n5',label:'Alert\nDoctor Now',type:'action',icon:'🚨',x:4,y:-0.6},
+        {id:'n6',label:'Patient\nWarning',type:'action',icon:'⚠️',x:4,y:0.3},
+        {id:'n7',label:'Safe: Log\n& Confirm',type:'output',icon:'✓',x:5,y:0},
+      ],
+      edges:[
+        ['n1','n2'],['n2','n3'],['n3','n4'],
+        ['n4','n5'],['n4','n6'],['n5','n7'],['n6','n7']
+      ]
+    }
+  },
+  {
+    id: 'patient-discharge',
+    name: 'Patient Discharge & Care Continuity Agent',
+    category: 'Healthcare',
+    icon: '🏨',
+    active: false,
+    trigger: 'Webhook',
+    tags: ['EHR Integration','GPT-4o-mini','Readmission Risk','Gmail','Clinical AI'],
+    desc: 'Healthcare agent that monitors EHR discharge events, uses AI to assess 30-day readmission risk, and automatically routes to urgent physician alerts, patient follow-up emails, or routine care plan logging based on risk level.',
+    xyz: {
+      x: 'Reduced 30-day hospital readmissions by identifying high-risk patients at the moment of discharge',
+      y: 'AI-scoring 100% of discharges for readmission risk vs. clinician review of only the most visible cases',
+      z: 'Listening to EHR discharge events, running GPT-4o-mini readmission risk assessment, and routing HIGH-risk patients to urgent physician alerts, MEDIUM-risk to automated patient follow-ups, and LOW-risk to routine care logging'
+    },
+    flow: {
+      nodes: [
+        {id:'n1',label:'EHR Discharge\nWebhook',type:'webhook',icon:'🔗',x:0,y:0},
+        {id:'n2',label:'Extract\nPatient Data',type:'set',icon:'⚙️',x:1,y:0},
+        {id:'n3',label:'GPT-4o-mini\nReadmission Risk',type:'ai',icon:'🧠',x:2,y:0},
+        {id:'n4',label:'Risk\nLevel?',type:'decision',icon:'◆',x:3,y:0},
+        {id:'n5',label:'Urgent\nPhysician Alert',type:'action',icon:'🚨',x:4,y:-0.8},
+        {id:'n6',label:'Patient\nFollow-up Email',type:'action',icon:'📧',x:4,y:0},
+        {id:'n7',label:'Log Care\nPlan',type:'output',icon:'📋',x:4,y:0.8},
+      ],
+      edges:[
+        ['n1','n2'],['n2','n3'],['n3','n4'],
+        ['n4','n5'],['n4','n6'],['n4','n7']
+      ]
+    }
+  },
+  {
+    id: 'fleet-maintenance',
+    name: 'Fleet Predictive Maintenance Agent',
+    category: 'Transportation',
+    icon: '🚛',
+    active: false,
+    trigger: 'Schedule',
+    tags: ['Telematics API','GPT-4o-mini','DTC Analysis','Slack','Service Scheduling'],
+    desc: 'Transportation agent that hourly polls fleet telematics, uses AI to analyze vehicle health data and DTC codes, predicts failures, automatically schedules service appointments, and alerts fleet managers via Slack for at-risk vehicles.',
+    xyz: {
+      x: 'Prevented vehicle breakdowns and costly roadside failures with predictive maintenance',
+      y: 'Reducing unplanned vehicle downtime by identifying at-risk vehicles 48–72 hours before failure vs. reactive post-breakdown maintenance',
+      z: 'Polling telematics APIs hourly, running GPT-4o-mini analysis on vehicle health metrics and DTC codes, predicting failure probability, auto-scheduling service appointments, and alerting fleet managers via Slack'
+    },
+    flow: {
+      nodes: [
+        {id:'n1',label:'Every\nHour',type:'schedule',icon:'🕒',x:0,y:0},
+        {id:'n2',label:'Fetch Fleet\nTelematics',type:'http',icon:'📡',x:1,y:0},
+        {id:'n3',label:'GPT-4o-mini\nHealth Analysis',type:'ai',icon:'🧠',x:2,y:0},
+        {id:'n4',label:'Failure\nRisk?',type:'decision',icon:'◆',x:3,y:0},
+        {id:'n5',label:'Schedule\nService',type:'action',icon:'🔧',x:4,y:-0.6},
+        {id:'n6',label:'Slack\nFleet Manager',type:'action',icon:'💬',x:4,y:0.3},
+        {id:'n7',label:'Log\nAll Clear',type:'output',icon:'✓',x:5,y:0},
+      ],
+      edges:[
+        ['n1','n2'],['n2','n3'],['n3','n4'],
+        ['n4','n5'],['n4','n6'],
+        ['n5','n7'],['n6','n7']
+      ]
+    }
+  },
+  {
+    id: 'route-optimization',
+    name: 'Dynamic Route Optimization Agent',
+    category: 'Transportation',
+    icon: '🗺️',
+    active: false,
+    trigger: 'Schedule',
+    tags: ['Google Maps','Weather API','GPT-4o-mini','Twilio','Gmail'],
+    desc: 'Monitors active deliveries every 15 min, fetches live traffic/weather, uses AI to assess delay impact, auto-updates routes/ETAs, notifies drivers with new instructions, and proactively alerts customers.',
+    xyz: {
+      x: 'Minimized delivery delays proactively through continuous AI-driven route optimization',
+      y: 'Re-routing affected deliveries within 15 minutes of delay detection vs. reactive driver calls taking 1–2 hours',
+      z: 'Polling active deliveries every 15 minutes, fetching live traffic and weather data, running GPT-4o-mini delay impact assessment, pushing updated routes to drivers via SMS, and sending proactive ETA updates to customers'
+    },
+    flow: {
+      nodes: [
+        {id:'n1',label:'Every\n15 Min',type:'schedule',icon:'🕒',x:0,y:0},
+        {id:'n2',label:'Fetch Active\nDeliveries',type:'http',icon:'📦',x:1,y:0},
+        {id:'n3',label:'Fetch Traffic\n+ Weather',type:'http',icon:'🌤️',x:2,y:0},
+        {id:'n4',label:'GPT-4o-mini\nDelay Assessment',type:'ai',icon:'🧠',x:3,y:0},
+        {id:'n5',label:'Delay\nDetected?',type:'decision',icon:'◆',x:4,y:0},
+        {id:'n6',label:'Update Route\n+ ETA',type:'action',icon:'🗺️',x:5,y:-0.6},
+        {id:'n7',label:'Notify Driver\n+ Customer',type:'action',icon:'📱',x:5,y:0.5},
+      ],
+      edges:[
+        ['n1','n2'],['n2','n3'],['n3','n4'],['n4','n5'],
+        ['n5','n6'],['n5','n7']
+      ]
+    }
+  },
+  {
+    id: 'freight-exception',
+    name: 'Freight Exception & Carrier Resolution Agent',
+    category: 'Transportation',
+    icon: '📮',
+    active: false,
+    trigger: 'Schedule',
+    tags: ['Freight API','GPT-4o-mini','Carrier Comms','CRM Logging'],
+    desc: 'Monitors in-transit freight hourly, classifies exceptions by severity using AI, routes critical cases to account managers and customers, logs low-priority issues.',
+    xyz: {
+      x: 'Reduced freight exception resolution time by automating severity classification and routing',
+      y: 'Escalating critical shipment exceptions within minutes vs. daily manual carrier report reviews',
+      z: 'Monitoring in-transit freight hourly, classifying exception severity with GPT-4o-mini, routing CRITICAL cases immediately to account managers and customers with resolution guidance, and auto-logging LOW-priority exceptions'
+    },
+    flow: {
+      nodes: [
+        {id:'n1',label:'Every\nHour',type:'schedule',icon:'🕒',x:0,y:0},
+        {id:'n2',label:'Fetch In-Transit\nFreight',type:'http',icon:'🚢',x:1,y:0},
+        {id:'n3',label:'GPT-4o-mini\nClassify Severity',type:'ai',icon:'🧠',x:2,y:0},
+        {id:'n4',label:'Critical\nException?',type:'decision',icon:'◆',x:3,y:0},
+        {id:'n5',label:'Alert Acct\nManager',type:'action',icon:'🚨',x:4,y:-0.6},
+        {id:'n6',label:'Notify\nCustomer',type:'action',icon:'📧',x:4,y:0.2},
+        {id:'n7',label:'Log Low\nPriority',type:'output',icon:'📋',x:5,y:0},
+      ],
+      edges:[
+        ['n1','n2'],['n2','n3'],['n3','n4'],
+        ['n4','n5'],['n4','n6'],
+        ['n5','n7'],['n6','n7']
+      ]
+    }
+  },
+  {
+    id: 'site-safety',
+    name: 'Site Safety & OSHA Reporting Agent',
+    category: 'Construction',
+    icon: '⛑️',
+    active: false,
+    trigger: 'Schedule',
+    tags: ['OSHA Compliance','GPT-4o-mini','Incident Reporting','Gmail','Construction AI'],
+    desc: 'Daily construction site safety inspection analyzer. Uses AI to classify OSHA violations, auto-files incident reports, and alerts project managers with corrective actions.',
+    xyz: {
+      x: 'Reduced OSHA compliance risk on construction sites through automated daily inspection analysis',
+      y: 'Catching and documenting 100% of OSHA violations daily vs. periodic manual safety audits covering ~40%',
+      z: 'Ingesting daily safety inspection reports, classifying violations by OSHA code with GPT-4o-mini, auto-filing incident reports with regulatory authorities, and alerting project managers with specific corrective actions'
+    },
+    flow: {
+      nodes: [
+        {id:'n1',label:'Daily\nSchedule',type:'schedule',icon:'🕒',x:0,y:0},
+        {id:'n2',label:'Fetch Safety\nReports',type:'http',icon:'📋',x:1,y:0},
+        {id:'n3',label:'GPT-4o-mini\nClassify OSHA',type:'ai',icon:'🧠',x:2,y:0},
+        {id:'n4',label:'Violation\nFound?',type:'decision',icon:'◆',x:3,y:0},
+        {id:'n5',label:'Auto-File\nIncident Report',type:'action',icon:'📝',x:4,y:-0.6},
+        {id:'n6',label:'Alert Project\nManager',type:'action',icon:'🚨',x:4,y:0.4},
+        {id:'n7',label:'Log\nAll Clear',type:'output',icon:'✓',x:5,y:0},
+      ],
+      edges:[
+        ['n1','n2'],['n2','n3'],['n3','n4'],
+        ['n4','n5'],['n4','n6'],
+        ['n5','n7'],['n6','n7']
+      ]
+    }
+  },
+  {
+    id: 'material-procurement',
+    name: 'Material Procurement & Supply Forecasting Agent',
+    category: 'Construction',
+    icon: '🏗️',
+    active: false,
+    trigger: 'Schedule',
+    tags: ['ERP Integration','GPT-4o-mini','Purchase Orders','Slack','Construction AI'],
+    desc: 'Daily AI-driven material procurement agent. Cross-references project schedules with inventory, forecasts shortages, auto-creates urgent purchase orders, and alerts project managers.',
+    xyz: {
+      x: 'Prevented construction project delays caused by material shortages through proactive AI forecasting',
+      y: 'Replacing weekly manual inventory reviews with daily automated shortage detection across all active projects',
+      z: 'Cross-referencing project schedules against real-time inventory daily, running GPT-4o-mini shortage forecasting, auto-generating purchase orders for at-risk materials, and alerting project managers before stockouts occur'
+    },
+    flow: {
+      nodes: [
+        {id:'n1',label:'Daily\nSchedule',type:'schedule',icon:'🕒',x:0,y:0},
+        {id:'n2',label:'Fetch Project\nSchedules',type:'http',icon:'📅',x:1,y:-0.5},
+        {id:'n3',label:'Fetch\nInventory',type:'http',icon:'📦',x:1,y:0.5},
+        {id:'n4',label:'GPT-4o-mini\nForecast',type:'ai',icon:'🧠',x:2.5,y:0},
+        {id:'n5',label:'Shortage\nDetected?',type:'decision',icon:'◆',x:3.5,y:0},
+        {id:'n6',label:'Create\nPurchase Order',type:'action',icon:'📝',x:4.5,y:-0.5},
+        {id:'n7',label:'Alert Project\nManager',type:'action',icon:'💬',x:4.5,y:0.5},
+      ],
+      edges:[
+        ['n1','n2'],['n1','n3'],
+        ['n2','n4'],['n3','n4'],
+        ['n4','n5'],['n5','n6'],['n5','n7']
+      ]
+    }
+  },
+  {
+    id: 'rag-query',
+    name: 'RAG Query Agent + Document Ingestion Pipeline',
+    category: 'AI & ML',
+    icon: '🔍',
+    active: true,
+    trigger: 'Webhook',
+    tags: ['OpenAI Embeddings','Supabase Vector','GPT-4o','RAG','PDF Ingestion'],
+    desc: 'Full RAG stack: PDF document ingestion pipeline (chunk → embed → store in Supabase) + query agent (embed question → vector search → GPT-4o answers with citations and confidence score).',
+    xyz: {
+      x: 'Enabled semantic question-answering over private document libraries with cited, confidence-scored responses',
+      y: 'Delivering answers with source citations in under 2 seconds vs. manual document search taking 10–20 minutes',
+      z: 'Ingesting PDFs by chunking and embedding with OpenAI text-embedding-3-small into Supabase vector store, then embedding incoming questions for cosine similarity search and generating cited answers via GPT-4o'
+    },
+    flow: {
+      nodes: [
+        {id:'n1',label:'PDF Upload\nWebhook',type:'webhook',icon:'📄',x:0,y:-0.6},
+        {id:'n2',label:'Chunk\nText',type:'code',icon:'</> ',x:1,y:-0.6},
+        {id:'n3',label:'Embed\n(text-emb-3)',type:'ai',icon:'🧠',x:2,y:-0.6},
+        {id:'n4',label:'Store\nSupabase',type:'output',icon:'🗄️',x:3,y:-0.6},
+        {id:'n5',label:'Query\nWebhook',type:'webhook',icon:'🔗',x:0,y:0.6},
+        {id:'n6',label:'Embed\nQuestion',type:'ai',icon:'🧠',x:1,y:0.6},
+        {id:'n7',label:'Vector\nSearch',type:'http',icon:'🔍',x:2,y:0.6},
+        {id:'n8',label:'GPT-4o\nAnswer',type:'ai',icon:'🧠',x:3,y:0.6},
+        {id:'n9',label:'Return\nCited Answer',type:'output',icon:'✓',x:4,y:0.6},
+      ],
+      edges:[
+        ['n1','n2'],['n2','n3'],['n3','n4'],
+        ['n5','n6'],['n6','n7'],['n7','n8'],['n8','n9']
+      ]
+    }
+  },
+];
+
+// ===============================
+// FLOW DIAGRAM RENDERER
+// ===============================
+function renderFlow(container, {nodes, edges}) {
+  const NW = 120, NH = 46, GX = 150, GY = 68, MX = 16, MY = 20;
+  const xs = nodes.map(n=>n.x), ys = nodes.map(n=>n.y);
+  const minX = Math.min(...xs), minY = Math.min(...ys);
+  const maxX = Math.max(...xs), maxY = Math.max(...ys);
+  const W = (maxX-minX)*GX + NW + MX*2;
+  const H = (maxY-minY)*GY + NH + MY*2;
+  const ns = {};
+  nodes.forEach(n=>{
+    ns[n.id] = {
+      ...n,
+      cx: (n.x-minX)*GX + MX + NW/2,
+      cy: (n.y-minY)*GY + MY + NH/2,
+    };
+  });
+  const svgNS = 'http://www.w3.org/2000/svg';
+  const svg = document.createElementNS(svgNS,'svg');
+  svg.setAttribute('viewBox',`0 0 ${W} ${H}`);
+  svg.style.cssText = 'width:100%;min-width:'+W+'px;display:block;';
+  const defs = document.createElementNS(svgNS,'defs');
+  defs.innerHTML = `<marker id="arr" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#374151"/></marker>`;
+  svg.appendChild(defs);
+  // edges
+  edges.forEach(([fid,tid])=>{
+    const f=ns[fid], t=ns[tid]; if(!f||!t) return;
+    const x1=f.cx+NW/2, y1=f.cy, x2=t.cx-NW/2, y2=t.cy;
+    const mx=(x1+x2)/2;
+    const p=document.createElementNS(svgNS,'path');
+    p.setAttribute('d',`M${x1} ${y1} C${mx} ${y1} ${mx} ${y2} ${x2} ${y2}`);
+    p.setAttribute('stroke','#374151'); p.setAttribute('stroke-width','1.8');
+    p.setAttribute('fill','none'); p.setAttribute('marker-end','url(#arr)');
+    svg.appendChild(p);
+  });
+  // nodes
+  nodes.forEach(n=>{
+    const {cx,cy,type,label,icon}=ns[n.id];
+    const x=cx-NW/2, y=cy-NH/2;
+    const s=NODE_STYLES[type]||NODE_STYLES.set;
+    const g=document.createElementNS(svgNS,'g');
+    g.style.cursor='default';
+    const rect=document.createElementNS(svgNS,'rect');
+    rect.setAttribute('x',x); rect.setAttribute('y',y);
+    rect.setAttribute('width',NW); rect.setAttribute('height',NH);
+    rect.setAttribute('rx','7'); rect.setAttribute('fill',s.bg);
+    rect.setAttribute('stroke',s.border); rect.setAttribute('stroke-width','1.5');
+    g.appendChild(rect);
+    // icon
+    const iconEl=document.createElementNS(svgNS,'text');
+    iconEl.setAttribute('x',x+10); iconEl.setAttribute('y',cy);
+    iconEl.setAttribute('dominant-baseline','middle');
+    iconEl.setAttribute('font-size','13');
+    iconEl.textContent=icon||'';
+    g.appendChild(iconEl);
+    // label lines
+    const lines=(label||'').split('\n');
+    lines.forEach((line,i)=>{
+      const t2=document.createElementNS(svgNS,'text');
+      const ly = lines.length===1 ? cy : cy + (i-(lines.length-1)/2)*13;
+      t2.setAttribute('x',cx+8); t2.setAttribute('y',ly);
+      t2.setAttribute('dominant-baseline','middle');
+      t2.setAttribute('text-anchor','middle');
+      t2.setAttribute('font-size','10');
+      t2.setAttribute('font-family','JetBrains Mono, monospace');
+      t2.setAttribute('fill',s.text);
+      t2.textContent=line;
+      g.appendChild(t2);
+    });
+    svg.appendChild(g);
+  });
+  container.innerHTML='';
+  container.appendChild(svg);
+}
+
+// ===============================
+// CATEGORY COLORS
+// ===============================
+const CAT_COLORS = {
+  'Productivity':     { color:'#22d3ee', bg:'rgba(34,211,238,0.1)' },
+  'AgriTech':         { color:'#4ade80', bg:'rgba(74,222,128,0.1)' },
+  'AI & ML':          { color:'#a78bfa', bg:'rgba(167,139,250,0.1)' },
+  'HR & Ops':         { color:'#c084fc', bg:'rgba(192,132,252,0.1)' },
+  'Finance':          { color:'#34d399', bg:'rgba(52,211,153,0.1)' },
+  'Healthcare':       { color:'#f87171', bg:'rgba(248,113,113,0.1)' },
+  'Transportation':   { color:'#60a5fa', bg:'rgba(96,165,250,0.1)' },
+  'Construction':     { color:'#fb923c', bg:'rgba(251,146,60,0.1)' },
+  'E-Commerce':       { color:'#f472b6', bg:'rgba(244,114,182,0.1)' },
+  'Marketing':        { color:'#fbbf24', bg:'rgba(251,191,36,0.1)' },
+  'Customer Success': { color:'#2dd4bf', bg:'rgba(45,212,191,0.1)' },
+};
+function catStyle(cat) {
+  const c = CAT_COLORS[cat] || { color:'#94a3b8', bg:'rgba(148,163,184,0.1)' };
+  return `color:${c.color};background:${c.bg};border:1px solid ${c.color}33;`;
+}
+
+// ===============================
+// RENDER CARDS
+// ===============================
+function renderCards(list) {
+  const grid = document.getElementById('agentGrid');
+  grid.innerHTML = '';
+  list.forEach((agent,i) => {
+    const card = document.createElement('div');
+    card.className = 'agent-card';
+    card.dataset.cat = agent.category;
+    card.style.transitionDelay = (i%3)*60+'ms';
+    card.innerHTML = `
+      <div class="card-top">
+        <div class="card-icon">${agent.icon}</div>
+        <div class="card-meta">
+          <span class="card-status ${agent.active?'active':'inactive'}">${agent.active?'Active':'Inactive'}</span>
+          <span class="card-trigger">${agent.trigger}</span>
+        </div>
+      </div>
+      <div class="card-title">${agent.name}</div>
+      <div class="card-desc">${agent.desc}</div>
+      <div class="card-footer">
+        <div class="card-tags">${agent.tags.slice(0,3).map(t=>`<span class="tag">${t}</span>`).join('')}</div>
+        <span class="cat-badge" style="${catStyle(agent.category)}font-size:11px;font-weight:600;padding:3px 12px;border-radius:100px;">${agent.category}</span>
+      </div>
+      <div style="margin-top:14px;border-top:1px solid var(--border);padding-top:12px;display:flex;justify-content:flex-end;">
+        <button class="card-view-btn">View Architecture →</button>
+      </div>
+    `;
+    card.addEventListener('click', () => openModal(agent));
+    grid.appendChild(card);
+    setTimeout(() => card.classList.add('visible'), 50);
+  });
+  observeCards();
+}
+
+// ===============================
+// SCROLL REVEAL
+// ===============================
+function observeCards() {
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if(e.isIntersecting) {
+        e.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.agent-card').forEach(c => obs.observe(c));
+}
+
+// ===============================
+// FILTER
+// ===============================
+document.getElementById('filterBar').addEventListener('click', e => {
+  const btn = e.target.closest('.filter-btn');
+  if(!btn) return;
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const cat = btn.dataset.cat;
+  const filtered = cat==='All' ? agents : agents.filter(a=>a.category===cat);
+  renderCards(filtered);
+});
+
+// ===============================
+// MODAL
+// ===============================
+function openModal(agent) {
+  document.getElementById('mCat').textContent = agent.category;
+  document.getElementById('mCat').className = 'modal-cat cat-badge';
+  document.getElementById('mCat').style.cssText = catStyle(agent.category)+'font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:4px 12px;border-radius:100px;';
+  document.getElementById('mTrigger').textContent = agent.trigger;
+  const statusEl = document.getElementById('mStatus');
+  statusEl.textContent = agent.active ? 'Active' : 'Inactive';
+  statusEl.className = `modal-status card-status ${agent.active?'active':'inactive'}`;
+  document.getElementById('mTitle').textContent = agent.name;
+  document.getElementById('mTags').innerHTML = agent.tags.map(t=>`<span class="modal-tag">${t}</span>`).join('');
+  document.getElementById('mXyzX').textContent = agent.xyz.x;
+  document.getElementById('mXyzY').textContent = agent.xyz.y;
+  document.getElementById('mXyzZ').textContent = agent.xyz.z;
+  renderFlow(document.getElementById('flowDiagram'), agent.flow);
+  document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.getElementById('modalClose').addEventListener('click', closeModal);
+document.getElementById('modalOverlay').addEventListener('click', e => {
+  if(e.target === document.getElementById('modalOverlay')) closeModal();
+});
+document.addEventListener('keydown', e => { if(e.key==='Escape') closeModal(); });
+
+// ===============================
+// PARTICLE BACKGROUND
+// ===============================
+(function() {
+  const canvas = document.getElementById('bg-canvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, stars=[];
+  function resize() {
+    W = canvas.width = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+  function initStars() {
+    stars = [];
+    for(let i=0;i<120;i++) {
+      stars.push({
+        x: Math.random()*W, y: Math.random()*H,
+        r: Math.random()*1.2+0.2,
+        a: Math.random(), speed: Math.random()*0.3+0.1,
+        color: Math.random()>0.7 ? '#22d3ee' : Math.random()>0.5 ? '#a78bfa' : '#ffffff'
+      });
+    }
+  }
+  function draw() {
+    ctx.clearRect(0,0,W,H);
+    // gradient bg
+    const g = ctx.createLinearGradient(0,0,W,H);
+    g.addColorStop(0,'#080b12'); g.addColorStop(1,'#0a0f1e');
+    ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
+    // stars
+    stars.forEach(s => {
+      s.a += s.speed*0.01;
+      const alpha = (Math.sin(s.a)+1)/2*0.55+0.05;
+      ctx.globalAlpha = alpha;
+      ctx.fillStyle = s.color;
+      ctx.beginPath();
+      ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+      ctx.fill();
+      ctx.globalAlpha = 1;
+    });
+    // subtle grid lines
+    ctx.strokeStyle = 'rgba(30,40,60,0.4)';
+    ctx.lineWidth = 0.5;
+    for(let x=0;x<W;x+=80) {
+      ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,H); ctx.stroke();
+    }
+    for(let y=0;y<H;y+=80) {
+      ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(W,y); ctx.stroke();
+    }
+    requestAnimationFrame(draw);
+  }
+  window.addEventListener('resize', () => { resize(); initStars(); });
+  resize(); initStars(); draw();
+})();
+
+// ===============================
+// INIT
+// ===============================
+renderCards(agents);
+</script>
+</body>
+</html>
