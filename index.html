@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Agent Portfolio | data-geek-astronomy</title>
+<title>AI Agent Portfolio | ARAVIND KUMAR NALUKURTHI</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -38,6 +38,32 @@ body {
   min-height: 100vh;
   overflow-x: hidden;
 }
+
+/* === CONTACT STRIP === */
+.contact-strip {
+  display: flex; flex-wrap: wrap; gap: 6px; justify-content: center;
+  margin-bottom: 36px;
+}
+.contact-chip {
+  display: inline-flex; align-items: center; gap: 7px;
+  background: rgba(15,22,35,0.7);
+  border: 1px solid var(--border2);
+  border-radius: 100px;
+  padding: 7px 16px;
+  color: var(--text2);
+  text-decoration: none;
+  font-size: 13px;
+  transition: all .2s;
+  backdrop-filter: blur(8px);
+}
+.contact-chip:hover {
+  border-color: var(--cyan);
+  color: var(--cyan);
+  background: rgba(34,211,238,0.06);
+  transform: translateY(-1px);
+}
+.contact-chip svg { width: 15px; height: 15px; fill: currentColor; flex-shrink: 0; }
+.contact-chip span.chip-icon { font-size: 15px; line-height: 1; }
 
 /* === CANVAS BG === */
 #bg-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
@@ -512,9 +538,13 @@ footer a:hover { text-decoration: underline; }
 <canvas id="bg-canvas"></canvas>
 
 <nav>
-  <div class="nav-logo">⟨ <span>data-geek-astronomy</span> /ai-agents ⟩</div>
+  <div class="nav-logo" style="flex-direction:column;align-items:flex-start;gap:2px;">
+    <span style="font-size:13px;font-weight:700;color:var(--text);letter-spacing:.05em;">ARAVIND KUMAR NALUKURTHI</span>
+    <span style="font-size:10px;color:var(--text3);font-family:'JetBrains Mono',monospace;">AI Agent Engineer · San Francisco, CA</span>
+  </div>
   <div class="nav-links">
     <a href="#agents" class="hide-mobile">Agents</a>
+    <a href="https://data-geek-astronomy.github.io/-portfolio-website/" target="_blank" class="hide-mobile" style="color:var(--cyan);">Portfolio</a>
     <a href="https://github.com/data-geek-astronomy" target="_blank" class="github-btn">
       <svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
       GitHub
@@ -524,8 +554,36 @@ footer a:hover { text-decoration: underline; }
 
 <section class="hero">
   <div class="hero-badge">LIVE PORTFOLIO · BUILT ON N8N</div>
-  <h1>AI Agents<br>That Ship Work</h1>
+  <div style="font-family:'JetBrains Mono',monospace;font-size:clamp(22px,3.5vw,38px);font-weight:700;letter-spacing:.12em;color:var(--text);margin-bottom:4px;text-transform:uppercase;">ARAVIND KUMAR NALUKURTHI</div>
+  <h1 style="margin-bottom:16px;">AI Agents<br>That Ship Work</h1>
   <p class="hero-sub">A collection of production-grade automation agents spanning healthcare, finance, transportation, and more — each solving a real problem with measurable impact.</p>
+
+  <!-- Contact strip -->
+  <div class="contact-strip">
+    <a href="mailto:aravind.kumar.nalukurthi@gmail.com" class="contact-chip">
+      <span class="chip-icon">
+        <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+      </span>
+      aravind.kumar.nalukurthi@gmail.com
+    </a>
+    <a href="https://github.com/data-geek-astronomy" target="_blank" class="contact-chip">
+      <svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+      github.com/data-geek-astronomy
+    </a>
+    <a href="https://data-geek-astronomy.github.io/-portfolio-website/" target="_blank" class="contact-chip">
+      <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+      Portfolio Website
+    </a>
+    <a href="tel:4809311899" class="contact-chip">
+      <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+      (480) 931-1899
+    </a>
+    <span class="contact-chip" style="cursor:default;">
+      <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+      San Francisco, California
+    </span>
+  </div>
+
   <div class="hero-stats">
     <div class="stat"><span class="stat-num">20</span><span class="stat-label">Agents</span></div>
     <div class="stat"><span class="stat-num">11</span><span class="stat-label">Industries</span></div>
@@ -534,9 +592,9 @@ footer a:hover { text-decoration: underline; }
   </div>
   <div class="hero-cta">
     <a href="#agents" class="btn-primary">View All Agents ↓</a>
-    <a href="https://github.com/data-geek-astronomy" target="_blank" class="btn-secondary">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
-      View on GitHub
+    <a href="https://data-geek-astronomy.github.io/-portfolio-website/" target="_blank" class="btn-secondary">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+      View Portfolio
     </a>
   </div>
   <div class="scroll-hint">
@@ -569,8 +627,30 @@ footer a:hover { text-decoration: underline; }
 </main>
 
 <footer>
-  Built with n8n · Deployed on GitHub Pages ·
-  <a href="https://github.com/data-geek-astronomy" target="_blank">github.com/data-geek-astronomy</a>
+  <div style="font-family:'JetBrains Mono',monospace;font-size:15px;font-weight:700;color:var(--text);letter-spacing:.1em;margin-bottom:16px;">ARAVIND KUMAR NALUKURTHI</div>
+  <div style="display:flex;flex-wrap:wrap;gap:20px;justify-content:center;margin-bottom:20px;">
+    <a href="mailto:aravind.kumar.nalukurthi@gmail.com" style="display:flex;align-items:center;gap:6px;color:var(--text2);text-decoration:none;font-size:13px;transition:color .2s;" onmouseover="this.style.color='var(--cyan)'" onmouseout="this.style.color='var(--text2)'">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+      aravind.kumar.nalukurthi@gmail.com
+    </a>
+    <a href="https://github.com/data-geek-astronomy" target="_blank" style="display:flex;align-items:center;gap:6px;color:var(--text2);text-decoration:none;font-size:13px;transition:color .2s;" onmouseover="this.style.color='var(--cyan)'" onmouseout="this.style.color='var(--text2)'">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+      github.com/data-geek-astronomy
+    </a>
+    <a href="https://data-geek-astronomy.github.io/-portfolio-website/" target="_blank" style="display:flex;align-items:center;gap:6px;color:var(--text2);text-decoration:none;font-size:13px;transition:color .2s;" onmouseover="this.style.color='var(--cyan)'" onmouseout="this.style.color='var(--text2)'">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+      Portfolio Website
+    </a>
+    <a href="tel:4809311899" style="display:flex;align-items:center;gap:6px;color:var(--text2);text-decoration:none;font-size:13px;transition:color .2s;" onmouseover="this.style.color='var(--cyan)'" onmouseout="this.style.color='var(--text2)'">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+      (480) 931-1899
+    </a>
+    <span style="display:flex;align-items:center;gap:6px;color:var(--text3);font-size:13px;">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+      San Francisco, California
+    </span>
+  </div>
+  <div style="color:var(--text3);font-size:12px;">Built with n8n · Deployed on GitHub Pages</div>
 </footer>
 
 <!-- Modal -->
