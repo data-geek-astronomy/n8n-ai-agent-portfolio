@@ -597,7 +597,7 @@ footer a:hover { text-decoration: underline; }
   </div>
 
   <div class="hero-stats">
-    <div class="stat"><span class="stat-num">20</span><span class="stat-label">Agents</span></div>
+    <div class="stat"><span class="stat-num">25</span><span class="stat-label">Agents</span></div>
     <div class="stat"><span class="stat-num">11</span><span class="stat-label">Industries</span></div>
     <div class="stat"><span class="stat-num">15+</span><span class="stat-label">Integrations</span></div>
     <div class="stat"><span class="stat-num">∞</span><span class="stat-label">Automations</span></div>
@@ -622,7 +622,7 @@ footer a:hover { text-decoration: underline; }
   </div>
 
   <div class="filter-bar" id="filterBar">
-    <button class="filter-btn active" data-cat="All">All <span style="color:var(--text3);font-family:'JetBrains Mono',monospace;font-size:11px">(20)</span></button>
+    <button class="filter-btn active" data-cat="All">All <span style="color:var(--text3);font-family:'JetBrains Mono',monospace;font-size:11px">(25)</span></button>
     <button class="filter-btn" data-cat="Healthcare"><span class="dot dot-Healthcare"></span>Healthcare</button>
     <button class="filter-btn" data-cat="Transportation"><span class="dot dot-Transportation"></span>Transportation</button>
     <button class="filter-btn" data-cat="Finance"><span class="dot dot-Finance"></span>Finance</button>
@@ -633,6 +633,9 @@ footer a:hover { text-decoration: underline; }
     <button class="filter-btn" data-cat="Productivity"><span class="dot dot-Productivity"></span>Productivity</button>
     <button class="filter-btn" data-cat="AgriTech"><span class="dot dot-AgriTech"></span>AgriTech</button>
     <button class="filter-btn" data-cat="Marketing"><span class="dot dot-Marketing"></span>Marketing</button>
+    <button class="filter-btn" data-cat="Geospatial"><span class="dot" style="background:#38bdf8"></span>Geospatial</button>
+    <button class="filter-btn" data-cat="Sustainability"><span class="dot" style="background:#86efac"></span>Sustainability</button>
+    <button class="filter-btn" data-cat="Genomics"><span class="dot" style="background:#e879f9"></span>Genomics</button>
   </div>
 
   <div class="agent-grid" id="agentGrid"></div>
@@ -1350,6 +1353,182 @@ const agents = [
       ]
     }
   },
+
+  // ── NEW AGENTS ──────────────────────────────────────────
+
+  {
+    id: 'icu-sepsis',
+    name: 'ICU Early Warning & Sepsis Prediction Agent',
+    category: 'Healthcare',
+    icon: '🏥',
+    active: false,
+    trigger: 'Schedule',
+    tags: ['qSOFA','SIRS','PagerDuty','GPT-4o-mini','EHR','Slack'],
+    desc: 'Polls ICU patient vitals every 15 minutes, calculates qSOFA and SIRS scores per Surviving Sepsis Campaign guidelines, and fires a PagerDuty critical alert + physician email + Slack notification the moment sepsis risk is detected.',
+    xyz: {
+      x: 'Reduced ICU sepsis detection lag from hours to under 15 minutes across all monitored patients',
+      y: 'Automatically generating AI clinical briefs and paging the rapid response team via PagerDuty, Gmail, and Slack on every positive screen',
+      z: 'Polling EHR vitals on a 15-minute schedule, computing qSOFA (≥2) and SIRS (≥2) scores in code, and routing alerts through GPT-4o-mini for clinical narrative generation'
+    },
+    flow: {
+      nodes: [
+        {id:'n1',label:'Schedule\n15 Min',type:'schedule',icon:'⏱️',x:0,y:0},
+        {id:'n2',label:'Fetch ICU\nVitals',type:'http',icon:'🏥',x:1,y:0},
+        {id:'n3',label:'qSOFA/SIRS\nScoring',type:'code',icon:'</>',x:2,y:0},
+        {id:'n4',label:'Sepsis\nAlert?',type:'decision',icon:'⚡',x:3,y:0},
+        {id:'n5',label:'AI Clinical\nBrief',type:'ai',icon:'🧠',x:4,y:-0.8},
+        {id:'n6',label:'PagerDuty\nCritical',type:'action',icon:'🚨',x:5,y:-0.8},
+        {id:'n7',label:'Email\nPhysician',type:'output',icon:'📧',x:6,y:-0.8},
+        {id:'n8',label:'Slack\nICU Team',type:'output',icon:'💬',x:7,y:-0.8},
+        {id:'n9',label:'Log\nAll Clear',type:'set',icon:'✓',x:4,y:0.8},
+      ],
+      edges:[
+        ['n1','n2'],['n2','n3'],['n3','n4'],
+        ['n4','n5'],['n4','n9'],
+        ['n5','n6'],['n6','n7'],['n7','n8']
+      ]
+    }
+  },
+
+  {
+    id: 'satellite-change',
+    name: 'Satellite Imagery Change Detection Agent',
+    category: 'Geospatial',
+    icon: '🛰️',
+    active: false,
+    trigger: 'Schedule',
+    tags: ['Planet Labs','NDVI','GEOINT','GPT-4o-mini','Slack','Remote Sensing'],
+    desc: 'Daily satellite imagery monitor that fetches Planet Labs scenes, detects changes via NDVI delta, building footprint shifts, and vehicle count variance, then generates GPT-4o-mini GEOINT intel reports and alerts analysts via Slack and email.',
+    xyz: {
+      x: 'Automated daily change detection across monitored geospatial targets with confidence-scored GEOINT reports',
+      y: 'Flagging significant site changes within hours of satellite acquisition vs. multi-day manual analyst review cycles',
+      z: 'Querying Planet Labs PlanetScope API daily, computing NDVI delta and building/vehicle metrics in code, and generating classified intel reports via GPT-4o-mini with Slack and email distribution'
+    },
+    flow: {
+      nodes: [
+        {id:'n1',label:'Daily\nScan',type:'schedule',icon:'🛰️',x:0,y:0},
+        {id:'n2',label:'Planet Labs\nImagery API',type:'http',icon:'🌍',x:1,y:0},
+        {id:'n3',label:'NDVI/Building\nDetection',type:'code',icon:'</>',x:2,y:0},
+        {id:'n4',label:'Significant\nChange?',type:'decision',icon:'🔍',x:3,y:0},
+        {id:'n5',label:'AI GEOINT\nReport',type:'ai',icon:'🧠',x:4,y:-0.8},
+        {id:'n6',label:'Extract\nIntel',type:'set',icon:'📋',x:5,y:-0.8},
+        {id:'n7',label:'Slack\nAlert',type:'output',icon:'💬',x:6,y:-0.8},
+        {id:'n8',label:'Email\nAnalysts',type:'output',icon:'📧',x:7,y:-0.8},
+        {id:'n9',label:'Log\nNo Change',type:'set',icon:'✓',x:4,y:0.8},
+      ],
+      edges:[
+        ['n1','n2'],['n2','n3'],['n3','n4'],
+        ['n4','n5'],['n4','n9'],
+        ['n5','n6'],['n6','n7'],['n7','n8']
+      ]
+    }
+  },
+
+  {
+    id: 'drug-interaction',
+    name: 'Drug-Drug Interaction Safety Screener',
+    category: 'Healthcare',
+    icon: '💊',
+    active: true,
+    trigger: 'Webhook',
+    tags: ['OpenFDA','RxNorm','GPT-4o-mini','Clinical Safety','Pharmacy','Webhook'],
+    desc: 'Webhook-triggered drug safety screener that queries OpenFDA and RxNorm APIs, calculates interaction severity, uses GPT-4o-mini for clinical pharmacist reasoning, and either holds the prescription with physician+pharmacist alerts or sends an automatic clearance note.',
+    xyz: {
+      x: 'Reduced dangerous drug interaction reach-patients rate by catching critical interactions at the point of prescribing',
+      y: 'Screening every new prescription against OpenFDA contraindications and RxNorm interaction data in under 10 seconds',
+      z: 'Receiving prescriptions via webhook, querying OpenFDA drug label API and RxNorm interaction graph in parallel, scoring severity in code, and routing through GPT-4o-mini for clinical reasoning before alerting or clearing'
+    },
+    flow: {
+      nodes: [
+        {id:'n1',label:'New Rx\nWebhook',type:'webhook',icon:'💊',x:0,y:0},
+        {id:'n2',label:'OpenFDA\nQuery',type:'http',icon:'🏛️',x:1,y:-0.7},
+        {id:'n3',label:'RxNorm\nInteractions',type:'http',icon:'🔗',x:1,y:0.7},
+        {id:'n4',label:'Severity\nAnalysis',type:'code',icon:'</>',x:2,y:0},
+        {id:'n5',label:'High Risk\nInteraction?',type:'decision',icon:'⚠️',x:3,y:0},
+        {id:'n6',label:'AI Safety\nReasoning',type:'ai',icon:'🧠',x:4,y:-0.8},
+        {id:'n7',label:'HOLD: Alert\nPhysician',type:'output',icon:'🚫',x:5,y:-0.8},
+        {id:'n8',label:'Alert\nPharmacist',type:'output',icon:'📧',x:6,y:-0.8},
+        {id:'n9',label:'Send\nClearance',type:'output',icon:'✅',x:4,y:0.8},
+      ],
+      edges:[
+        ['n1','n2'],['n1','n3'],
+        ['n2','n4'],['n3','n4'],
+        ['n4','n5'],
+        ['n5','n6'],['n5','n9'],
+        ['n6','n7'],['n7','n8']
+      ]
+    }
+  },
+
+  {
+    id: 'esg-carbon',
+    name: 'ESG Carbon Footprint Audit Agent',
+    category: 'Sustainability',
+    icon: '🌿',
+    active: false,
+    trigger: 'Schedule',
+    tags: ['GHG Protocol','CDP','Scope 1/2/3','GPT-4o-mini','ESG','Concur','ERP'],
+    desc: 'Monthly ESG audit that pulls utility energy data, Concur travel expenses, and ERP manufacturing data, calculates Scope 1, 2, and 3 emissions per the GHG Protocol, generates a CDP-style carbon disclosure report via GPT-4o-mini, and delivers it to the CFO, ESG team, and Slack.',
+    xyz: {
+      x: 'Automated monthly Scope 1/2/3 GHG emissions reporting aligned to CDP disclosure standards',
+      y: 'Delivering CFO-ready carbon audit reports on the 1st of each month with reduction opportunity rankings and offset recommendations',
+      z: 'Pulling utility, travel, and ERP data via APIs, computing tCO2e using EPA emissions factors, and generating CDP-format narrative with top reduction opportunities via GPT-4o-mini'
+    },
+    flow: {
+      nodes: [
+        {id:'n1',label:'Monthly\nCron',type:'schedule',icon:'📅',x:0,y:0},
+        {id:'n2',label:'Utility\nEnergy API',type:'http',icon:'⚡',x:1,y:0},
+        {id:'n3',label:'Concur\nTravel API',type:'http',icon:'✈️',x:2,y:0},
+        {id:'n4',label:'ERP Mfg\nData',type:'http',icon:'🏭',x:3,y:0},
+        {id:'n5',label:'GHG Scope\n1/2/3 Calc',type:'code',icon:'</>',x:4,y:0},
+        {id:'n6',label:'AI CDP\nReport',type:'ai',icon:'🧠',x:5,y:0},
+        {id:'n7',label:'Email\nCFO',type:'output',icon:'📧',x:6,y:-0.8},
+        {id:'n8',label:'Email\nESG Team',type:'output',icon:'📧',x:6,y:0},
+        {id:'n9',label:'Slack\nSummary',type:'output',icon:'💬',x:6,y:0.8},
+      ],
+      edges:[
+        ['n1','n2'],['n2','n3'],['n3','n4'],['n4','n5'],['n5','n6'],
+        ['n6','n7'],['n6','n8'],['n6','n9']
+      ]
+    }
+  },
+
+  {
+    id: 'genomic-variant',
+    name: 'Genomic Variant Clinical Significance Classifier',
+    category: 'Genomics',
+    icon: '🧬',
+    active: true,
+    trigger: 'Webhook',
+    tags: ['ACMG/AMP','ClinVar','gnomAD','GPT-4o-mini','VCF','Precision Medicine'],
+    desc: 'Lab webhook receiver that parses VCF files, queries ClinVar and gnomAD population databases, applies ACMG/AMP 2015 pathogenicity criteria via GPT-4o-mini molecular geneticist AI, and routes pathogenic findings urgently to genetic counselor and ordering physician within minutes.',
+    xyz: {
+      x: 'Reduced genomic variant classification turnaround from days to minutes while applying rigorous ACMG/AMP 2015 criteria to every variant',
+      y: 'Routing pathogenic findings to genetic counselors and physicians immediately after VCF receipt vs. manual bioinformatics review taking 24-72 hours',
+      z: 'Parsing VCF files in code, querying ClinVar via NCBI eUtils and gnomAD GraphQL for population frequencies, and applying PVS1/PS/PM/PP criteria through a board-certified molecular geneticist AI persona in GPT-4o-mini'
+    },
+    flow: {
+      nodes: [
+        {id:'n1',label:'VCF Lab\nWebhook',type:'webhook',icon:'🧬',x:0,y:0},
+        {id:'n2',label:'Parse VCF\nVariants',type:'code',icon:'</>',x:1,y:0},
+        {id:'n3',label:'Query\nClinVar',type:'http',icon:'🔬',x:2,y:-0.8},
+        {id:'n4',label:'Query\ngnomAD',type:'http',icon:'🌐',x:2,y:0.8},
+        {id:'n5',label:'ACMG AI\nClassifier',type:'ai',icon:'🧠',x:3,y:0},
+        {id:'n6',label:'Pathogenic\nFindings?',type:'decision',icon:'⚠️',x:4,y:0},
+        {id:'n7',label:'URGENT:\nCounselor',type:'output',icon:'🚨',x:5,y:-0.8},
+        {id:'n8',label:'Email\nPhysician',type:'output',icon:'📧',x:6,y:-0.8},
+        {id:'n9',label:'Routine\nReport',type:'output',icon:'📄',x:5,y:0.8},
+      ],
+      edges:[
+        ['n1','n2'],
+        ['n2','n3'],['n2','n4'],
+        ['n3','n5'],['n4','n5'],
+        ['n5','n6'],
+        ['n6','n7'],['n6','n9'],
+        ['n7','n8']
+      ]
+    }
+  },
 ];
 
 // ===============================
@@ -1443,6 +1622,9 @@ const CAT_COLORS = {
   'E-Commerce':       { color:'#f472b6', bg:'rgba(244,114,182,0.1)' },
   'Marketing':        { color:'#fbbf24', bg:'rgba(251,191,36,0.1)' },
   'Customer Success': { color:'#2dd4bf', bg:'rgba(45,212,191,0.1)' },
+  'Geospatial':       { color:'#38bdf8', bg:'rgba(56,189,248,0.1)' },
+  'Sustainability':   { color:'#86efac', bg:'rgba(134,239,172,0.1)' },
+  'Genomics':         { color:'#e879f9', bg:'rgba(232,121,249,0.1)' },
 };
 function catStyle(cat) {
   const c = CAT_COLORS[cat] || { color:'#94a3b8', bg:'rgba(148,163,184,0.1)' };
